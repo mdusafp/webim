@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Малютин Вадим | тестовое задание от Webim.ru</title>
+	<style type="text/css">
+		html, body, .content {
+			height: 100%;
+			min-height: 100%;
+		}
+		body {
+			background: url("https://w-dog.net/wallpapers/13/7/470605069828164/vk-vkontakte-logo-bk-vkontakte-logo-background.jpg");
+			-webkit-background-size: cover;
+			background-size: cover;
+		}
+		a {
+		  background: #5474a5;
+		  padding: 10px;
+		  border-radius: 6px;
+		  box-shadow: 0 0 10px #5474a5;
+		  color: #ccc;
+		  text-decoration: none;
+		  border: 1px solid #ccc;
+		}
+		a:hover {
+			background: #495ec6;
+		}
+		a:click {
+			background: blue;
+			transition: 0.3s all;
+		}
+		.content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.inner_content {
+			max-width: 50%;
+			text-align: center;
+			color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<% if (!user) { %>
+
+		<div class="content">
+			<div class="inner_content">
+				<h2>Добро пожаловать! Пожалуйста, авторизуйтесь через ВКонтакте.</h2>
+					<a href="/auth/vk">Авторизация в приложениии через вконтакте</a>
+			</div>
+		</div>
+		
+	<% } else { %>
+		<div class='content'>
+			<div class='inner_content'>
+				<h2>Привет, <%= user.displayName %>.</h2>
+
+				<hr>
+
+				<p>VK ID: <%= user.id %></p>
+				<p>VK Username: <%= user.username %></p>
+				<p>VK Name: <%= user.displayName %></p>
+					
+				<hr>
+
+				<p>Ваши 5 друзей:</p>
+
+        		<ul class='friends'></ul>
+
+				<hr>
+
+				<p>
+						<a href="/logout">Выйти</a>
+				</p>
+
+			</div>    
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script>
+			const token = '';
+			const baseUrl = 'https://api.vk.com/method/';
+			const method = 'friends.get?';
+			const userId = 'user_id=' + <%= user.id %>;
+			const accessToken = '&access_token=' + token;
+			const params = '&order=name&count=5&offset=100&fields=city,domain&v=5.64';
+
+			const fullUrl = baseUrl + method + userId + accessToken + params;
+			console.log(fullUrl);
+
+			$.ajax({
+					url : fullUrl,
+					type : "GET",
+					dataType: 'jsonp'
+			})
+			.done(function(data) {
+			  let friends = data.response.items;
+			  let list = $('ul.friends');
+			  let dynamicItems = '';
+
+			  $.each(friends, (i, val) => {
+			    console.log(val);
+			    let name = `${val.first_name} ${val.last_name}`;
+          dynamicItems += '<li id=' + i + '>' + name + '</li>';
+			  });
+
+			  list.append(dynamicItems);
+			});
+		</script>
+
+	<% } %>
+
+</body>
+</html>

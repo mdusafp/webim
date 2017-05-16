@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Малютин Вадим | тестовое задание от Webim.ru </title>
+	<style type="text/css">
+		html, body, .content {
+			height: 100%;
+			min-height: 100%;
+		}
+		body {
+			background: url("https://w-dog.net/wallpapers/13/7/470605069828164/vk-vkontakte-logo-bk-vkontakte-logo-background.jpg");
+			-webkit-background-size: cover;
+			background-size: cover;
+		}
+		a {
+		  background: #5474a5;
+		  padding: 10px;
+		  border-radius: 6px;
+		  box-shadow: 0 0 10px #5474a5;
+		  color: #ccc;
+		  text-decoration: none;
+		  border: 1px solid #ccc;
+		}
+		a:hover {
+			background: #495ec6;
+		}
+		a:click {
+			background: blue;
+			transition: 0.3s all;
+		}
+		.content {
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		}
+
+		.inner_content {
+		  max-width: 50%;
+			text-align: center;
+			color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<% if (!user) { %>
+		<p>
+		<a href="/">Главная</a> | 
+		<a href="/login">Войти</a>
+		</p>
+	<% } else { %>
+		<p>
+		<a href="/">Главная</a> | 
+		<a href="/account">Аккаунт</a> | 
+		<a href="/logout">Выйти</a>
+		</p>
+	<% } %>
+	<%- body %>
+</body>
+</html>
